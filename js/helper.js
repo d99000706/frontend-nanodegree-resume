@@ -34,19 +34,19 @@ var HTMLworkEmployer = '<a href="#">%data%';
 var HTMLworkTitle = ' - %data%</a>';
 var HTMLworkDates = '<div class="date-text">%data%</div>';
 var HTMLworkLocation = '<div class="location-text">%data%</div>';
-var HTMLworkDescription = '<p><br>%data%</p>';
+var HTMLworkDescription = '<p>%data%</p>';
 
 var HTMLprojectStart = '<div class="project-entry"></div>';
-var HTMLprojectTitle = '<a href="#">%data%</a>';
-var HTMLprojectDates = '<div class="date-text">%data%</div>';
-var HTMLprojectDescription = '<p><br>%data%</p>';
-var HTMLprojectImage = '<img src="%data%">';
+var HTMLprojectTitle = '<a class="float-left">%data%</a>';
+var HTMLprojectDates = '<div class="date-text float-left">%data%</div>';
+var HTMLprojectDescription = '<p class="float-left">%data%</p>';
+var HTMLprojectImage = '<img src="%data%" class="project-image"><br>';
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
-var HTMLschoolName = '<a href="#">%data%';
-var HTMLschoolDegree = ' -- %data%</a>';
-var HTMLschoolDates = '<div class="date-text">%data%</div>';
-var HTMLschoolLocation = '<div class="location-text">%data%</div>';
+var HTMLschoolName = '<a href="#">%data% </a>';
+var HTMLschoolDegree = '<div class="school-degree-text">%data%</div>';
+var HTMLschoolDates = '<div class="school-date-text">%data%</div>';
+var HTMLschoolLocation = '<div class="location-text">%data%</div><br>';
 var HTMLschoolMajor = '<em><br>Major: %data%</em>';
 
 var HTMLonlineClasses = '<h3>Online Classes</h3>';
@@ -85,7 +85,7 @@ function logClicks(x,y) {
 }
 
 $(document).click(function(loc) {
-  // your code goes here!
+  logClicks(loc.pageX, loc.pageY);
 });
 
 
@@ -124,18 +124,20 @@ function initializeMap() {
     var locations = [];
 
     // adds the single location property from bio to the locations array
-    locations.push(bio.contacts.location);
+    //locations.push(bio.location);
 
     // iterates through school locations and appends each location to
     // the locations array
-    for (var school in education.schools) {
-      locations.push(education.schools[school].location);
+    
+    for (var schoolIndex in education.schoolList) {
+      locations.push(education.schoolList[schoolIndex].location);
     }
+    
 
     // iterates through work locations and appends each location to
     // the locations array
-    for (var job in work.jobs) {
-      locations.push(work.jobs[job].location);
+    for (var job in work.jobList) {
+      locations.push(work.jobList[job].location);
     }
 
     return locations;
@@ -152,6 +154,32 @@ function initializeMap() {
     var lat = placeData.geometry.location.lat();  // latitude from the place service
     var lon = placeData.geometry.location.lng();  // longitude from the place service
     var name = placeData.formatted_address;   // name of the place from the place service
+    
+    // replace name with personal info about the place
+    // need to search in jobList and schoolList
+    for (jobIndex in work.jobList) {
+        tokens = name.split(", ");
+        
+        
+        if (work.jobList[jobIndex].location.search(tokens[0]) >= 0  &&
+            work.jobList[jobIndex].location.search(tokens[1]) >= 0) {
+            
+            name = work.jobList[jobIndex].mapText;
+        }
+    }    
+
+    for (schoolIndex in education.schoolList) {
+        tokens = name.split(", ");
+        
+        
+        if (education.schoolList[schoolIndex].location.search(tokens[0]) >= 0  &&
+            education.schoolList[schoolIndex].location.search(tokens[1]) >= 0) {
+            
+            name = education.schoolList[schoolIndex].mapText;
+        }
+    }    
+    
+    
     var bounds = window.mapBounds;            // current boundaries of the map window
 
     // marker is an object with additional data about the pin for a single location
@@ -165,12 +193,16 @@ function initializeMap() {
     // or hover over a pin on a map. They usually contain more information
     // about a location.
     var infoWindow = new google.maps.InfoWindow({
-      content: name
+      content: name,
+      maxWidth: 200
     });
 
     // hmmmm, I wonder what this is about...
     google.maps.event.addListener(marker, 'click', function() {
       // your code goes here!
+      infoWindow.open(map, marker);     
+      
+      
     });
 
     // this is where the pin actually gets added to the map.
@@ -233,11 +265,11 @@ Uncomment the code below when you're ready to implement a Google Map!
 */
 
 // Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+window.addEventListener('load', initializeMap);
 
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
-//window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function(e) {
   // Make sure the map bounds get updated on page resize
-//  map.fitBounds(mapBounds);
-//});
+  map.fitBounds(mapBounds);
+});

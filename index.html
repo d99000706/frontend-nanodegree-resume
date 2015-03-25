@@ -37,7 +37,11 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
   the DOM. jQuery is fast and easy to use, but it doesn't do anything
   you can't accomplish with vanilla (regular) JavaScript.
   -->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+  <!--
   <script src="js/jQuery.js"></script>
+  -->
 
   <!-- More on helper.js in the class -->
   <script src="js/helper.js"></script>
@@ -46,13 +50,20 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
   Uncomment the <script> tag below when you're ready to add an interactive
   Google Map to your resume!
   -->
-  <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script> -->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
+  <script src="js/jquery.svg.js"></script>
+  <script src="js/gmath.js"> </script>
+  <script src="js/svgJQueryTest.js"> </script>
+  
+  
   <meta name="viewport" content="width=device-width">
 </head>
 <body unresolved>
-  <div id="main">
-    Hello world!   <!-- You'll be deleting this line in the course -->
+
+    
+  <div id="main" class="main">
+
 
     <!--
     Everything from here to the <script> tag below is the skeleton of your
@@ -61,21 +72,32 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     display by looking at the id or at what's written between the <h2> tags.
     -->
     <div id="header" class="center-content clearfix">
-      <ul id="topContacts" class='flex-box'></ul>
+      <ul id="topContacts" class='flex-box'>
+      </ul>
     </div>
     <div style='clear: both;'></div>
     <div id="workExperience" class='gray'>
       <h2>Work Experience</h2>
     </div>
-    <div id="projects">
+    <div id="projects" class='gray2'>
       <h2>Projects</h2>
     </div>
     <div id="education" class='gray'>
       <h2>Education</h2>
     </div>
-    <div id="mapDiv">
+    <div id="mapDiv" class='gray2'>
       <h2>Where I've Lived and Worked</h2>
     </div>
+
+    
+    
+    <div id="gameDiv" class='gray'>
+        <h2>Take a break</h2>
+        <div id="gameBox" class='gray'>
+        </div>
+    </div>
+   
+    
     <div id="letsConnect" class='dark-gray'>
       <h2 class='orange center-text'>Let's Connect</h2>
         <ul id="footerContacts" class="flex-box">
@@ -113,7 +135,7 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
         an opening and closing set of slash asterisks for block comments.
     */
 
-
+    /*
     if(document.getElementsByClassName('flex-item').length === 0) {
       document.getElementById('topContacts').style.display = 'none';
     }
@@ -135,6 +157,7 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     if(document.getElementById('map') === null) {
       document.getElementById('mapDiv').style.display = 'none';
     }
+    */
   </script>
 </body>
 </html>
